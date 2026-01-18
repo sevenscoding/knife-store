@@ -1,0 +1,8 @@
+@use "@/app/styles/vars";
+@use "@/app/styles/normalize";
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont,
+  "Helvetica Neue", Arial, sans-serif;
+  color: var(--black-100);
+}
