@@ -1,7 +1,9 @@
 import { PaginatedResponse} from '@shared/types'
+import { CatalogItem } from '@shared/types'
 
 export type CatalogQuery = {
   q?: string
+  tag?: string
   min?: number
   max?: number
   inStock?: boolean
@@ -9,17 +11,6 @@ export type CatalogQuery = {
   sort?: 'price_asc' | 'price_desc'
   page?: number
   limit?: number
-}
-
-export type CatalogItem = {
-  id: string
-  name: string
-  price: number
-  rarity: string
-  inStock: boolean
-  tags: string[]
-  image: string
-  updatedAt: string
 }
 
 export type CatalogQueryParams = {

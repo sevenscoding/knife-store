@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { useCatalog } from '../composables/useCatalog'
 import Pagination from '@shared/components/Pagination.vue'
 import CatalogFilters from '../components/CatalogFilters.vue'
 import CatalogGrid from '../components/CatalogGrid.vue'
 import LoadingSpinner from '@shared/components/LoadingSpinner.vue'
+import { wsManager } from '@app/ws/wsManager'
 
-const { items, isLoading, query, total, onUpdate, setQuery } = useCatalog()
+const { items, isLoading, query, total, onUpdate, setQuery, wsHandler } = useCatalog()
+
+onMounted(() => {
+  wsManager.subscribeToCatalog(wsHandler)
+})
+
+onUnmounted(() => {
+  wsManager.unsubscribeFromCatalog(wsHandler)
+})
 </script>
 
 <template>

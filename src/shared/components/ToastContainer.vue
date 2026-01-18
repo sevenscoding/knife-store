@@ -10,7 +10,9 @@ const { messages } = useToast()
       v-for="(msg, i) in messages"
       :key="i"
       class="rounded-md px-4 py-3 text-sm font-medium text-white shadow-md animate-[toast-in_0.25s_ease-out]"
-      :class="msg.type === 'error' ? 'bg-red-500' : 'bg-green-500'"
+      :class="
+        msg.type === 'error' ? 'bg-red-500' : msg.type === 'info' ? 'bg-yellow-500' : 'bg-green-500'
+      "
     >
       {{ msg.message }}
     </div>

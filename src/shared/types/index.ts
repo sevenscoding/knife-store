@@ -20,3 +20,14 @@ export type PaginatedResponse<T> = {
   page: number
   limit: number
 }
+
+export type CatalogItem = {
+  id: string
+  name: string
+  price: number
+  rarity: string
+  inStock: boolean
+  tags: string[]
+  image: string
+  updatedAt: string
+}

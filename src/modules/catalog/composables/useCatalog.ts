@@ -2,7 +2,9 @@ import { ref, computed, watch } from 'vue'
 import { CatalogAPI } from '@modules/catalog/api'
 import { useToast } from '@shared/composables/useToast'
 import { useRouteQuery } from '@shared/composables/useRouteQuery'
-import type { CatalogItem, CatalogQueryParams } from '@modules/catalog/types'
+import type { CatalogQuery, CatalogQueryParams } from '@/modules/catalog/types'
+import { CatalogItem} from '@shared/types'
+import { WsEvent } from '@app/ws/types'
 
 export const useCatalog = () => {
   const toast = useToast()
@@ -12,7 +14,7 @@ export const useCatalog = () => {
   const total = ref(0)
   const isLoading = ref(false)
 
-  const query = computed(() => ({
+  const apiQuery = computed<CatalogQuery>(() => ({
     q: routeQuery.value.q,
     tag: routeQuery.value.tag,
     min: routeQuery.value.min ? Number(routeQuery.value.min) : undefined,
@@ -25,14 +27,14 @@ export const useCatalog = () => {
           : undefined,
     rarity: routeQuery.value.rarity,
     sort: routeQuery.value.sort,
-    page: Number(routeQuery.value.page ?? 1),
-    limit: Number(routeQuery.value.limit ?? 20)
+    page: routeQuery.value.page ? Number(routeQuery.value.page) : 1,
+    limit: routeQuery.value.limit ? Number(routeQuery.value.limit) : 20
   }))
 
   const fetchCatalog = async () => {
     try {
       isLoading.value = true
-      const res = await CatalogAPI.getCatalog(query.value)
+      const res = await CatalogAPI.getCatalog(apiQuery.value)
       items.value = res.items
       total.value = res.total
     } catch {
@@ -42,23 +44,28 @@ export const useCatalog = () => {
     }
   }
 
-  const serializeQuery = (q: Record<string, unknown>) =>
-    Object.fromEntries(
-      Object.entries(q).map(([k, v]) => [k, v === undefined ? undefined : String(v)])
-    )
-
   const onUpdate = (next: Partial<CatalogQueryParams>) => {
     setQuery(next)
   }
 
-  watch(query, fetchCatalog, { immediate: true })
+  const wsHandler = (event: WsEvent) => {
+    if (event.type !== 'product.updated') return
+
+    const item = items.value.find(i => i.id === event.data.id)
+    if (!item) return
+
+    Object.assign(item, event.data.changes)
+  }
+
+  watch(apiQuery, fetchCatalog, { immediate: true })
 
   return {
     items,
     total,
     isLoading,
-    query,
+    query: apiQuery,
+    onUpdate,
     setQuery,
-    onUpdate
+    wsHandler
   }
 }

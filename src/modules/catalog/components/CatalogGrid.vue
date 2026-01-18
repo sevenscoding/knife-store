@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CatalogItem from './CatalogItem.vue'
-import type { CatalogItem as Item } from '../types'
+import type { CatalogItem as Item } from '@shared/types'
 
 type Props = {
   items: Item[]

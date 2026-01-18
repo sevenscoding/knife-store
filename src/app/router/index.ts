@@ -12,6 +12,12 @@ export const router = createRouter({
       meta: { [ROUTE_META.REQUIRES_AUTH]: true }
     },
     {
+      path: ROUTE_PATHS.PRODUCT,
+      name: ROUTE_NAMES.PRODUCT,
+      component: () => import('@modules/product/views/ProductView.vue'),
+      meta: { [ROUTE_META.REQUIRES_AUTH]: true }
+    },
+    {
       path: ROUTE_PATHS.LOGIN,
       name: ROUTE_NAMES.LOGIN,
       component: () => import('@modules/auth/views/AuthView.vue')

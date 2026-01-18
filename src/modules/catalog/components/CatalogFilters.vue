@@ -58,8 +58,8 @@ const { search, isPriceAsc, isPriceDesc, setSort, setTag } = useCatalogFilters(p
         <UiButton
           :class="
             isPriceAsc
-              ? 'bg-red-500 text-white ring-2 ring-red-500'
-              : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+              ? 'bg-white text-gray-900 shadow-md'
+              : 'bg-gray-50 text-gray-700 ring-1 ring-gray-200 hover:bg-white hover:text-gray-900'
           "
           :aria-pressed="isPriceAsc"
           @click="setSort('price_asc')"
@@ -70,8 +70,8 @@ const { search, isPriceAsc, isPriceDesc, setSort, setTag } = useCatalogFilters(p
         <UiButton
           :class="
             isPriceDesc
-              ? 'bg-red-500 text-white ring-2 ring-red-500'
-              : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+              ? 'bg-white text-gray-900 shadow-md'
+              : 'bg-gray-50 text-gray-700 ring-1 ring-gray-200 hover:bg-white hover:text-gray-900'
           "
           :aria-pressed="isPriceDesc"
           @click="setSort('price_desc')"
