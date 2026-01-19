@@ -12,7 +12,7 @@ const cartSubs = new Set<Handler>()
 function ensureSocket() {
   if (socket) return
 
-  socket = new WebSocket('ws://localhost:3001')
+  socket = new WebSocket(import.meta.env.VITE_WS_URL)
 
   socket.onopen = () => {
     pendingMessages.forEach(m => socket?.send(JSON.stringify(m)))
