@@ -9,12 +9,13 @@ const cartStore = useCartStore()
 const name = ref('')
 const comment = ref('')
 
-const { isProcessing, isSuccess, orderId, error, redirectIn, pay } = useCheckoutPayment({
-  customer: {
-    name,
-    comment
-  }
-})
+const { isProcessing, isSuccess, orderId, error, redirectIn, nameServerInvalid, pay } =
+  useCheckoutPayment({
+    customer: {
+      name,
+      comment
+    }
+  })
 </script>
 
 <template>
@@ -30,7 +31,13 @@ const { isProcessing, isSuccess, orderId, error, redirectIn, pay } = useCheckout
         v-model="name"
         type="text"
         placeholder="Your name"
-        class="h-11 w-full rounded-lg border border-slate-300 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        :aria-invalid="nameServerInvalid"
+        class="h-11 w-full rounded-lg border px-3 focus:outline-none focus:ring-2"
+        :class="
+          nameServerInvalid
+            ? 'border-rose-500 focus:ring-rose-400'
+            : 'border-slate-300 focus:ring-indigo-400'
+        "
       />
 
       <textarea
@@ -41,7 +48,7 @@ const { isProcessing, isSuccess, orderId, error, redirectIn, pay } = useCheckout
       />
 
       <p v-if="error === 'INVALID_CUSTOMER'" role="alert" class="text-sm text-rose-600">
-        Please enter a valid name.
+        The customer name is missing or invalid. Please enter a valid name.
       </p>
 
       <p

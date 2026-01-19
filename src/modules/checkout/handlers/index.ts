@@ -10,7 +10,10 @@ export const checkoutHandlers = [
     await delay(1200)
 
     if (!body.customer?.name || body.customer.name.trim().length < 2) {
-      return HttpResponse.json({ error: 'INVALID_CUSTOMER' }, { status: 422 })
+      return HttpResponse.json(
+        { error: 'INVALID_CUSTOMER', serverCart: body.cart },
+        { status: 422 }
+      )
     }
 
     const outdated = Math.random() < 0.3

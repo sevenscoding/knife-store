@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@shared/stores/cart'
 import { CheckoutAPI } from '@modules/checkout/api'
@@ -17,6 +17,8 @@ export function useCheckoutPayment(opts: {
   const orderId = ref<string | null>(null)
   const error = ref<'INVALID_CUSTOMER' | 'CART_OUTDATED' | null>(null)
   const redirectIn = ref<number | null>(null)
+
+  const nameServerInvalid = computed(() => error.value === 'INVALID_CUSTOMER')
 
   const pay = async () => {
     if (cartStore.hasNoValidItems || isProcessing.value) return
@@ -50,7 +52,10 @@ export function useCheckoutPayment(opts: {
         }
       }, 1000)
     } catch (e: any) {
+      console.dir(e.error)
+
       if (e?.error === 'INVALID_CUSTOMER') {
+        console.dir('INVALID_CUSTOMER')
         error.value = 'INVALID_CUSTOMER'
       }
 
@@ -69,6 +74,7 @@ export function useCheckoutPayment(opts: {
     isSuccess,
     orderId,
     error,
-    redirectIn
+    redirectIn,
+    nameServerInvalid
   }
 }

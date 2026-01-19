@@ -17,6 +17,15 @@ export class ApiClient {
     })
 
     if (!response.ok) {
+      let data: any = null
+      try {
+        data = await response.json()
+      } catch {}
+
+      throw data ?? { status: response.status }
+    }
+
+    if (!response.ok) {
       throw new Error(`API Error: ${response.status}`)
     }
 
