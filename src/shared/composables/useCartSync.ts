@@ -41,7 +41,6 @@ export const useCartSync = () => {
   }
 
   onMounted(() => {
-    console.log('subscribe!!!!!')
     wsManager.subscribeToCart(handler)
   })
 

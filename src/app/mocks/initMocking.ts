@@ -5,7 +5,7 @@ export async function initMocking() {
     onUnhandledRequest(req, print) {
       console.log(req)
 
-      return;
+      return
     }
   })
 }

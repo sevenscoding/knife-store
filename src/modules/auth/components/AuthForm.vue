@@ -17,7 +17,7 @@ const { login, isLoading, submit } = useAuthForm()
     />
 
     <div v-if="isLoading" class="flex justify-center">
-      <LoadingSpinner  />
+      <LoadingSpinner />
     </div>
 
     <UiButton v-else type="submit"> Login </UiButton>

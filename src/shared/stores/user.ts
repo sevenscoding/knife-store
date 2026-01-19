@@ -7,7 +7,6 @@ import { useToast } from '@shared/composables/useToast'
 import { useRouter } from 'vue-router'
 import { ROUTE_PATHS } from '@shared/constants/routes'
 
-
 type UserState = {
   id: string | null
   token: string | null
@@ -25,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
     id: null,
     token: null,
     avatar: null,
-    nickname: null,
+    nickname: null
   })
 
   const isAuthenticated = computed(() => Boolean(state.value.id && state.value.token))

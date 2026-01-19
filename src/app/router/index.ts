@@ -24,6 +24,12 @@ export const router = createRouter({
       meta: { [ROUTE_META.REQUIRES_AUTH]: true }
     },
     {
+      path: ROUTE_PATHS.CHECKOUT,
+      name: ROUTE_NAMES.CHECKOUT,
+      component: () => import('@modules/checkout/views/CheckoutView.vue'),
+      meta: { [ROUTE_META.REQUIRES_AUTH]: true }
+    },
+    {
       path: ROUTE_PATHS.LOGIN,
       name: ROUTE_NAMES.LOGIN,
       component: () => import('@modules/auth/views/AuthView.vue')

@@ -1,5 +1,5 @@
 import { http, HttpResponse, delay } from 'msw'
-import { BASE_URL} from '@shared/constants'
+import { BASE_URL } from '@shared/constants'
 
 export const authHandlers = [
   http.post(`${BASE_URL}/auth/login`, async ({ request }) => {

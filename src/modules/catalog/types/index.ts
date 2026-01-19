@@ -1,4 +1,4 @@
-import { PaginatedResponse} from '@shared/types'
+import { PaginatedResponse } from '@shared/types'
 import { CatalogItem } from '@shared/types'
 
 export type CatalogQuery = {

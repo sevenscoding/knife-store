@@ -39,7 +39,6 @@ export const useAuthForm = () => {
     }
   }
 
-
   return {
     login,
     isLoading,

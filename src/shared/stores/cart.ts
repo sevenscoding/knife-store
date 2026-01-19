@@ -50,6 +50,10 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const validItems = computed(() => items.value.filter(i => i.inStock && !i.priceChanged))
+
+  const hasNoValidItems = computed(() => validItems.value.length === 0)
+
   const mergeCartFromWs = (wsCart: CartResponse) => {
     const wsMap = new Map(wsCart.items.map(i => [i.id, i]))
 
@@ -135,18 +139,35 @@ export const useCartStore = defineStore('cart', () => {
   const count = computed(() => items.value.reduce((s, i) => s + i.qty, 0))
   const subtotal = computed(() => cart.value.subtotal)
 
+  const validSubtotal = computed(() =>
+    items.value.filter(i => i.inStock && !i.priceChanged).reduce((s, i) => s + i.price * i.qty, 0)
+  )
+
+  const clear = () => {
+    cart.value = {
+      items: [],
+      subtotal: 0,
+      currency: cart.value.currency,
+      updatedAt: new Date().toISOString()
+    }
+  }
+
   return {
     cart,
     items,
     count,
     subtotal,
     loading,
+    validItems,
+    hasNoValidItems,
+    clear,
     fetchCart,
     add,
     updateQty,
     remove,
     confirmPrice,
     applyCart,
-    mergeCartFromWs
+    mergeCartFromWs,
+    validSubtotal
   }
 })

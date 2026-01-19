@@ -2,7 +2,8 @@ export const ROUTE_NAMES = {
   CATALOG: 'Catalog',
   PRODUCT: 'Product',
   LOGIN: 'Login',
-  CART: 'Cart'
+  CART: 'Cart',
+  CHECKOUT: 'Checkout'
 } as const
 
 export const ROUTE_PATHS = {
@@ -10,7 +11,8 @@ export const ROUTE_PATHS = {
   CATALOG: '/',
   PRODUCT: '/products/:id',
   LOGIN: '/login',
-  CART: '/cart'
+  CART: '/cart',
+  CHECKOUT: '/checkout'
 } as const
 
 export const ROUTE_META = {

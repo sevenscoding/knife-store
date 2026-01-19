@@ -3,7 +3,7 @@ import { CatalogAPI } from '@modules/catalog/api'
 import { useToast } from '@shared/composables/useToast'
 import { useRouteQuery } from '@shared/composables/useRouteQuery'
 import type { CatalogQuery, CatalogQueryParams } from '@/modules/catalog/types'
-import { CatalogItem} from '@shared/types'
+import { CatalogItem } from '@shared/types'
 import { WsEvent } from '@app/ws/types'
 
 export const useCatalog = () => {

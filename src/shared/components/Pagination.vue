@@ -24,7 +24,6 @@ const totalPages = computed(() => Math.ceil(props.total / props.limit))
     role="navigation"
     aria-label="Pagination"
   >
-
     <button
       class="h-10 px-4 rounded-lg border text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100"
       :disabled="page === 1"
