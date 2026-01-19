@@ -87,7 +87,7 @@ const cartStore = useCartStore()
       @click="cartStore.add(item.id)"
     >
       <Transition name="stock" mode="out-in">
-        <span :key="item.inStock">
+        <span :key="String(item.inStock)">
           {{ item.inStock ? 'Add to cart' : 'Out of stock' }}
         </span>
       </Transition>

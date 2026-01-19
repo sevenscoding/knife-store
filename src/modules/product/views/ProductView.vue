@@ -4,8 +4,11 @@ import { useProduct } from '../composables/useProduct'
 import LoadingSpinner from '@shared/components/LoadingSpinner.vue'
 import UiButton from '@shared/components/ui/UiButton.vue'
 import NoImageBlock from '@shared/components/NoImageBlock.vue'
+import { useCartStore } from '@shared/stores/cart'
 
 const { item, isLoading } = useProduct()
+
+const cartStore = useCartStore()
 
 const imageError = ref(false)
 </script>
@@ -43,6 +46,7 @@ const imageError = ref(false)
             ? 'bg-blue-600 hover:bg-blue-700 text-white'
             : 'bg-slate-200 text-slate-500 cursor-not-allowed'
         "
+        @click="cartStore.add(item.id)"
       >
         {{ item.inStock ? 'Add to cart' : 'Out of stock' }}
       </UiButton>

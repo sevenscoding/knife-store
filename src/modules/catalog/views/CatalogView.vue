@@ -39,8 +39,8 @@ onUnmounted(() => {
     <CatalogGrid :items="items" :loading="isLoading" />
 
     <Pagination
-      :page="query.page"
-      :limit="query.limit"
+      :page="query.page ?? 1"
+      :limit="query.limit ?? 20"
       :total="total"
       @change="p => setQuery({ page: String(p) }, false)"
     />

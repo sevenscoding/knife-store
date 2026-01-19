@@ -1,12 +1,10 @@
-import { TOKEN, BASE_URL } from '@shared/constants'
+import { BASE_URL } from '@shared/constants'
 
 export class ApiClient {
   private baseUrl: string
-  private token: string
 
-  constructor(baseUrl: string, token: string) {
+  constructor(baseUrl: string) {
     this.baseUrl = baseUrl
-    this.token = token
   }
 
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
@@ -54,4 +52,4 @@ export class ApiClient {
   }
 }
 
-export const api = new ApiClient(BASE_URL, TOKEN)
+export const api = new ApiClient(BASE_URL)
