@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import CartIcon from '@shared/components/icons/CartIcon.vue'
 import { useCartStore } from '@shared/stores/cart'
 import { RouterLink, useRoute } from 'vue-router'
@@ -15,6 +16,10 @@ const route = useRoute()
 const logout = () => {
   userStore.logout()
 }
+
+onMounted(() => {
+  cartStore.fetchCart()
+})
 </script>
 
 <template>

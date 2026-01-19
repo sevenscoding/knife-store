@@ -15,7 +15,7 @@ export type CartSyncedEvent = {
   data: {
     cart: {
       items: {
-        productId: string
+        id: string
         name: string
         price: number
         qty: number

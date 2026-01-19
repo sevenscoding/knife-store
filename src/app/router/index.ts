@@ -18,6 +18,12 @@ export const router = createRouter({
       meta: { [ROUTE_META.REQUIRES_AUTH]: true }
     },
     {
+      path: ROUTE_PATHS.CART,
+      name: ROUTE_NAMES.CART,
+      component: () => import('@modules/cart/views/CartView.vue'),
+      meta: { [ROUTE_META.REQUIRES_AUTH]: true }
+    },
+    {
       path: ROUTE_PATHS.LOGIN,
       name: ROUTE_NAMES.LOGIN,
       component: () => import('@modules/auth/views/AuthView.vue')

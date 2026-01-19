@@ -1,10 +1,13 @@
-export type ListResponse<T> = {
-  items: T[]
-}
-
 export type CartItem = {
-  id: number
+  id: string
+  name: string
+  price: number
   qty: number
+  inStock: boolean
+  priceChanged?: {
+    from: number
+    to: number
+  }
 }
 
 export type LoginPayload = {
@@ -29,5 +32,19 @@ export type CatalogItem = {
   inStock: boolean
   tags: string[]
   image: string
+  updatedAt: string
+}
+
+export interface CartResponse {
+  items: CartItem[]
+  subtotal: number
+  currency: string
+  updatedAt: string
+}
+
+export type Cart = {
+  items: CartItem[]
+  subtotal: number
+  currency: string
   updatedAt: string
 }

@@ -55,29 +55,35 @@ const { search, isPriceAsc, isPriceDesc, setSort, setTag } = useCatalogFilters(p
       </div>
 
       <div class="flex gap-2 md:ml-auto" role="group" aria-label="Sort by price">
-        <UiButton
-          :class="
-            isPriceAsc
-              ? 'bg-white text-gray-900 shadow-md'
-              : 'bg-gray-50 text-gray-700 ring-1 ring-gray-200 hover:bg-white hover:text-gray-900'
-          "
+        <button
+          type="button"
           :aria-pressed="isPriceAsc"
+          :class="[
+            'px-4 py-2 rounded-xl text-sm font-semibold transition-all',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400',
+            isPriceAsc
+              ? 'bg-blue-500 text-white shadow-md'
+              : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
+          ]"
           @click="setSort('price_asc')"
         >
           Price ↑
-        </UiButton>
+        </button>
 
-        <UiButton
-          :class="
-            isPriceDesc
-              ? 'bg-white text-gray-900 shadow-md'
-              : 'bg-gray-50 text-gray-700 ring-1 ring-gray-200 hover:bg-white hover:text-gray-900'
-          "
+        <button
+          type="button"
           :aria-pressed="isPriceDesc"
+          :class="[
+            'px-4 py-2 rounded-xl text-sm font-semibold transition-all',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400',
+            isPriceDesc
+              ? 'bg-pink-500 text-white shadow-md'
+              : 'bg-pink-100 text-pink-800 hover:bg-pink-200'
+          ]"
           @click="setSort('price_desc')"
         >
           Price ↓
-        </UiButton>
+        </button>
       </div>
     </div>
   </form>

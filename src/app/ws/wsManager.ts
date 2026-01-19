@@ -15,7 +15,7 @@ function ensureSocket() {
   socket = new WebSocket('ws://localhost:3001')
 
   socket.onopen = () => {
-    pendingMessages.forEach(m => socket!.send(JSON.stringify(m)))
+    pendingMessages.forEach(m => socket?.send(JSON.stringify(m)))
     pendingMessages = []
   }
 
@@ -24,12 +24,11 @@ function ensureSocket() {
       typeof e.data === 'string' ? JSON.parse(e.data) : JSON.parse(new TextDecoder().decode(e.data))
 
     if (msg.type === 'product.updated') {
-
       productSubs.get(msg.data.id)?.forEach(h => h(msg))
-
       if (productSubs.size === 0) {
         catalogSubs.forEach(h => h(msg))
       }
+      return
     }
 
     if (msg.type === 'cart.synced') {
@@ -60,46 +59,44 @@ function cleanup() {
 export const wsManager = {
   subscribeToProduct(id: string, handler: Handler) {
     ensureSocket()
-
     if (!productSubs.has(id)) {
       productSubs.set(id, new Set())
       send({ type: 'subscribe.product', data: { productId: id } })
     }
-
     productSubs.get(id)!.add(handler)
   },
 
   unsubscribeFromProduct(id: string, handler: Handler) {
     const set = productSubs.get(id)
     if (!set) return
-
     set.delete(handler)
-
     if (set.size === 0) {
       productSubs.delete(id)
       send({ type: 'unsubscribe.product', data: { productId: id } })
     }
-
     cleanup()
   },
 
   subscribeToCatalog(handler: Handler) {
     ensureSocket()
-
-    if (catalogSubs.size === 0) {
-      send({ type: 'subscribe.catalog' })
-    }
-
+    if (catalogSubs.size === 0) send({ type: 'subscribe.catalog' })
     catalogSubs.add(handler)
   },
 
   unsubscribeFromCatalog(handler: Handler) {
     catalogSubs.delete(handler)
-
-    if (catalogSubs.size === 0) {
-      send({ type: 'unsubscribe.catalog' })
-    }
-
+    if (catalogSubs.size === 0) send({ type: 'unsubscribe.catalog' })
     cleanup()
   },
+
+  subscribeToCart(handler: Handler) {
+    ensureSocket()
+    cartSubs.add(handler)
+    send({ type: 'cart.sync' })
+  },
+
+  unsubscribeFromCart(handler: Handler) {
+    cartSubs.delete(handler)
+    cleanup()
+  }
 }
