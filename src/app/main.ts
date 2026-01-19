@@ -8,8 +8,6 @@ import '@app/styles/index.scss'
 
 const { worker } = await import('@app/mocks/browser')
 
-if (import.meta.env.DEV) {
-  worker.start()
-}
+worker.start({ onUnhandledRequest: 'bypass' })
 
 createApp(App).use(createPinia()).use(router).mount('#app')
