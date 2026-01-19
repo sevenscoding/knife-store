@@ -3,7 +3,7 @@ import { PRODUCTS } from '../../../../db/products'
 import { sendCartSync } from '@app/ws/cart/cartSync'
 import { sendProductUpdate } from '@app/ws/product/productUpdate'
 
-const productWs = ws.link('ws://localhost:3001')
+const productWs = ws.link(import.meta.env.VITE_WS_URL ?? 'ws://localhost:3001')
 const PRODUCT_INDEX = import.meta.env.VITE_WS_PRODUCT_INDEX
 
 export const handlersWs = [

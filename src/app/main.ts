@@ -7,6 +7,9 @@ import '@app/styles/tailwind.css'
 import '@app/styles/index.scss'
 
 const { worker } = await import('@app/mocks/browser')
-await worker.start()
+
+if (import.meta.env.DEV) {
+  worker.start()
+}
 
 createApp(App).use(createPinia()).use(router).mount('#app')

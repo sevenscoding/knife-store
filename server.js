@@ -1,16 +1,42 @@
+import http from 'http'
 import { WebSocketServer } from 'ws'
+import fs from 'fs'
+import path from 'path'
+import url from 'url'
 
-const PORT = process.env.PORT || 3000
-const wss = new WebSocketServer({ port: PORT })
+const PORT = process.env.PORT || 10000
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+
+const server = http.createServer((req, res) => {
+  let filePath = path.join(__dirname, 'dist', req.url === '/' ? 'index.html' : req.url)
+
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(__dirname, 'dist', 'index.html')
+  }
+
+  fs.createReadStream(filePath).pipe(res)
+})
+
+const wss = new WebSocketServer({ server })
 
 wss.on('connection', ws => {
-  ws.send(
-    JSON.stringify({
-      type: 'connected'
-    })
-  )
+  const cartInterval = setInterval(() => {
+    ws.send(
+      JSON.stringify({
+        type: 'cart.synced',
+        data: {
+          cart: {
+            items: [],
+            subtotal: 0,
+            currency: 'USD',
+            updatedAt: new Date().toISOString()
+          }
+        }
+      })
+    )
+  }, 8000)
 
-  const interval = setInterval(() => {
+  const productInterval = setInterval(() => {
     ws.send(
       JSON.stringify({
         type: 'product.updated',
@@ -24,9 +50,14 @@ wss.on('connection', ws => {
         }
       })
     )
-  }, 3000)
+  }, 5000)
 
-  ws.on('close', () => clearInterval(interval))
+  ws.on('close', () => {
+    clearInterval(cartInterval)
+    clearInterval(productInterval)
+  })
 })
 
-console.log(`WS server running on ${PORT}`)
+server.listen(PORT, () => {
+  console.log(`HTTP + WS server running on ${PORT}`)
+})
