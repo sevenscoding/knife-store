@@ -7,6 +7,18 @@ import url from 'url'
 const PORT = process.env.PORT || 10000
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
+const MIME_TYPES = {
+  '.html': 'text/html',
+  '.js': 'application/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2'
+}
+
 const server = http.createServer((req, res) => {
   let filePath = path.join(__dirname, 'dist', req.url === '/' ? 'index.html' : req.url)
 
@@ -14,29 +26,17 @@ const server = http.createServer((req, res) => {
     filePath = path.join(__dirname, 'dist', 'index.html')
   }
 
+  const ext = path.extname(filePath)
+  const contentType = MIME_TYPES[ext] || 'application/octet-stream'
+
+  res.writeHead(200, { 'Content-Type': contentType })
   fs.createReadStream(filePath).pipe(res)
 })
 
 const wss = new WebSocketServer({ server })
 
 wss.on('connection', ws => {
-  const cartInterval = setInterval(() => {
-    ws.send(
-      JSON.stringify({
-        type: 'cart.synced',
-        data: {
-          cart: {
-            items: [],
-            subtotal: 0,
-            currency: 'USD',
-            updatedAt: new Date().toISOString()
-          }
-        }
-      })
-    )
-  }, 8000)
-
-  const productInterval = setInterval(() => {
+  const interval = setInterval(() => {
     ws.send(
       JSON.stringify({
         type: 'product.updated',
@@ -52,10 +52,7 @@ wss.on('connection', ws => {
     )
   }, 5000)
 
-  ws.on('close', () => {
-    clearInterval(cartInterval)
-    clearInterval(productInterval)
-  })
+  ws.on('close', () => clearInterval(interval))
 })
 
 server.listen(PORT, () => {
