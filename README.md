@@ -13,7 +13,7 @@ pnpm dev
 
 ### Настройка WebSocket
 
-Поведение WebSocket настраивается через файл `.env`:
+Поведение WebSocket в каталоге, настраивается через файл `.env`:
 
 ```env
 VITE_WS_PRODUCT_INDEX=1
