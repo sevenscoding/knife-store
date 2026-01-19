@@ -1,7 +1,6 @@
 # Knife Store
 
 Тестовое задание с каталогом, корзиной и чекаутом.
-Backend полностью замокан с помощью MSW и WebSocket.
 
 ---
 
@@ -35,16 +34,22 @@ VITE_WS_PRODUCT_INDEX=1
 - настройка MSW
 - инициализация приложения
 
+![app structure](docs/images/app.png)
+
 ### modules
 - страницы приложения
 - логика, связанная со страницами
 - одинаковая структура для всех страниц
+
+![modules structure](docs/images/modules.png)
 
 ### shared
 - переиспользуемые UI-компоненты
 - composables
 - API-клиенты
 - общие типы и утилиты
+
+![sgared structure](docs/images/shared.png)
 
 ---
 
@@ -54,20 +59,28 @@ VITE_WS_PRODUCT_INDEX=1
 - Можно ввести имя пользователя
 - Можно оставить поле пустым, пользователь будет считаться анонимным
 
+![login page](docs/images/login.png)
+
 ### Каталог
 - Фильтры
 - Поиск
 - Пагинация
 - Обновление продуктов через WebSocket
 
+![catalog page](docs/images/catalog.png)
+
 ### Страница продукта
 - Обновление цены
 - Обновление поля `inStock`
+
+![product page](docs/images/product.png)
 
 ### Корзина
 - Для наглядности может обновляться любой элемент корзины
 - Обновляются цена и наличие
 - Корзина синхронизируется через WebSocket и MSW
+
+![cart page](docs/images/cart.png)
 
 ### Чекаут
 - Для наглядности чекаут иногда может возвращать ошибку
@@ -76,6 +89,7 @@ VITE_WS_PRODUCT_INDEX=1
   - корзина очищается
   - происходит редирект на главную страницу
 
+![checkout page](docs/images/checkout.png)
 ---
 
 ## Затраченное время

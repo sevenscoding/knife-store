@@ -15,7 +15,7 @@ export const handlersWs = [
 
     cartInterval = window.setInterval(() => {
       sendCartSync(client)
-    }, 10000)
+    }, 8000)
 
     client.addEventListener('message', e => {
       if (typeof e.data !== 'string') return
@@ -27,7 +27,7 @@ export const handlersWs = [
 
         productInterval = window.setInterval(() => {
           sendProductUpdate(client, subscribedProductId!)
-        }, 3000)
+        }, 7000)
       }
 
       if (msg.type === 'unsubscribe.product') {

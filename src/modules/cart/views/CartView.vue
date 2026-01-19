@@ -9,8 +9,9 @@ import CheckoutConfirmModal from '@modules/cart/components/CheckoutConfirmModal.
 const cartStore = useCartStore()
 const { isOpen, close, accept } = useCheckoutConfirm()
 
+useCartSync()
+
 onMounted(() => {
-  useCartSync()
   cartStore.fetchCart()
 })
 </script>
