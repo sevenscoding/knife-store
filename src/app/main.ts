@@ -6,8 +6,14 @@ import { createPinia } from 'pinia'
 import '@app/styles/tailwind.css'
 import '@app/styles/index.scss'
 
-const { worker } = await import('@app/mocks/browser')
+async function bootstrap() {
+  const { worker } = await import('@app/mocks/browser')
 
-worker.start({ onUnhandledRequest: 'bypass' })
+  await worker.start({
+    onUnhandledRequest: 'bypass'
+  })
 
-createApp(App).use(createPinia()).use(router).mount('#app')
+  createApp(App).use(createPinia()).use(router).mount('#app')
+}
+
+bootstrap()

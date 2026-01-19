@@ -3,6 +3,7 @@ import type { CartResponse } from '../types'
 
 export class CartAPI {
   static getCart() {
+    console.log('dooo')
     return api.get<CartResponse>('/cart')
   }
 
