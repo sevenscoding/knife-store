@@ -1,3 +1,6 @@
+# Online version
+### https://knife-store.onrender.com
+
 # Knife Store
 
 Тестовое задание с каталогом, корзиной и чекаутом.
